@@ -35,7 +35,7 @@ function Request(pTarget, pParams, pMethod)
 				case 403:
 				case 404:
 				case 500:
-					ref.dispatchEvent(new RequestEvent(RequestEvent.ERROR));
+					ref.dispatchEvent(new RequestEvent(RequestEvent.ERROR, ref.xhr_object.responseText, ref.xhr_object.responseJSON));
 				break;
 			}
 		}
