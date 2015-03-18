@@ -22,13 +22,14 @@ function Request(pTarget, pParams, pMethod)
 	{
 		if(ref.xhr_object.readyState==4)
 		{
+			var ct = ref.xhr_object.getResponseHeader("Content-type");
+			if(ct.indexOf("json")>-1)
+				eval("ref.xhr_object.responseJSON = "+ref.xhr_object.responseText+";");
+
 			switch(ref.xhr_object.status)
 			{
 				case 304:
 				case 200:
-					var ct = ref.xhr_object.getResponseHeader("Content-type");
-					if(ct.indexOf("json")>-1)
-						eval("ref.xhr_object.responseJSON = "+ref.xhr_object.responseText+";");
 					ref.dispatchEvent(new RequestEvent(Event.COMPLETE, ref.xhr_object.responseText, ref.xhr_object.responseJSON));
 				break;
 				case 403:
